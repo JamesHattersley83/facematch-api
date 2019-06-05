@@ -8,7 +8,7 @@ const app = express();
 const database = {
   users: [
     {
-      id: 123,
+      id: "123",
       name: "James",
       email: "james@gmail.com",
       password: "leeds",
@@ -16,7 +16,7 @@ const database = {
       joined: new Date()
     },
     {
-      id: 456,
+      id: "456",
       name: "John",
       email: "john@gmail.com",
       password: "password",
@@ -51,7 +51,7 @@ app.post("/signin", (req, res) => {
 app.post("/register", (req, res) => {
   const { email, name, password } = req.body;
   database.users.push({
-    id: 125,
+    id: "125",
     name: name,
     email: email,
     password: password,
@@ -59,6 +59,39 @@ app.post("/register", (req, res) => {
     joined: new Date()
   });
   res.json(database.users[database.users.length - 1]);
+});
+
+// profile:id endpoint --> GET
+app.get("/profile/:id", (req, res) => {
+  const { id } = req.params;
+  let found = false;
+  // loop through dummy database to check endpoint
+  database.users.forEach(user => {
+    if (user.id === id) {
+      found = true;
+      return res.json(user);
+    }
+  });
+  if (!found) {
+    res.status(404).json("user not found");
+  }
+});
+
+// image endpoint --> PUT
+app.put("/image", (req, res) => {
+  const { id } = req.body;
+  let found = false;
+  // loop through dummy database to check endpoint
+  database.users.forEach(user => {
+    if (user.id === id) {
+      found = true;
+      user.entries++;
+      return res.json(user.entries);
+    }
+  });
+  if (!found) {
+    res.status(404).json("user not found");
+  }
 });
 
 // server listening on port 3000
