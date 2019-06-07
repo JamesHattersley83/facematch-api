@@ -1,6 +1,8 @@
 // create express server
 const express = require("express");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const cors = require("cors");
 
 const app = express();
 
@@ -26,8 +28,9 @@ const database = {
   ]
 };
 
-// body-parser middlewear
+// middlewear
 app.use(bodyParser.json());
+app.use(cors());
 
 // test server is working with GET request
 app.get("/", (req, res) => {
