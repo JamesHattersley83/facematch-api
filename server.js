@@ -46,6 +46,11 @@ app.put('/image', (req, res) => {
   image.handleImage(req, res, db);
 });
 
+// image endpoint --> POST
+app.post('/imageUrl', (req, res) => {
+  image.handleImageUrl(req, res);
+});
+
 // server listening on port 3000
 app.listen(4000, () => {
   console.log('app is running on port 4000');
