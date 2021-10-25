@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const knex = require('knex');
+require('dotenv').config();
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
@@ -16,7 +17,7 @@ const db = knex({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: 'test',
+    password: process.env.DB_PASSWORD,
     database: 'facematch',
   },
 });
@@ -48,10 +49,10 @@ app.put('/image', (req, res) => {
 
 // image endpoint --> POST
 app.post('/imageUrl', (req, res) => {
-  image.handleImageUrl(req, res);
+  image.handleApiCall(req, res);
 });
 
 // server listening on port 3000
-app.listen(4000, () => {
-  console.log('app is running on port 4000');
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`app is running on port ${process.env.PORT}`);
 });
